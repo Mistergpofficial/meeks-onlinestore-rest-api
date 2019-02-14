@@ -54,10 +54,7 @@ router.post('/admin-signup', function (req,res,next) {
                                         var transporter = nodemailer.createTransport({ 
                                             host: "smtp.mailtrap.io",
                                             port: 2525,
-                                                auth: { 
-                                                user: 'df3c8258cde1c4', 
-                                                pass: '5f7cfd72ade7df' 
-                                                       } 
+                                            auth: process.env.MAILTRAP_API_TOKEN
                                             });
                                             const mailOptions = { 
                                           from: 'no-reply@yourwebapplication.com', 
@@ -269,10 +266,7 @@ router.post('/user-signup', function (req,res,next) {
                                         var transporter = nodemailer.createTransport({ 
                                             host: "smtp.mailtrap.io",
                                             port: 2525,
-                                                auth: { 
-                                                user: 'df3c8258cde1c4', 
-                                                pass: '5f7cfd72ade7df' 
-                                                       } 
+                                            auth: process.env.MAILTRAP_API_TOKEN
                                             });
                                             const mailOptions = { 
                                           from: 'no-reply@yourwebapplication.com', 
@@ -325,10 +319,7 @@ router.post('/resend', (req, res, next) => {
                 var transporter = nodemailer.createTransport({ 
                     host: "smtp.mailtrap.io",
                     port: 2525,
-                        auth: { 
-                        user: 'df3c8258cde1c4', 
-                        pass: '5f7cfd72ade7df' 
-                               } 
+                    auth: process.env.MAILTRAP_API_TOKEN
                     });
                     const mailOptions = { 
                   from: 'no-reply@yourwebapplication.com', 
@@ -349,30 +340,6 @@ router.post('/resend', (req, res, next) => {
        });
 });
 
-router.post('/password/email', (req, res, next) => {
-    User.findOne({email: req.body.email}, function (err, user) {
-        if(err){
-            res.status(404).json({
-                msg: 'We cant find a user with that e-mail address'
-            })
-        }else{
-            const password = new Password({
-                'email': req.body.email,
-              //  user.resetPasswordToken = token;
-                //user.resetPasswordExpires = Date.now() + 3600000; // 1 hour
-            });
-            password.save()
-            .then(result => {
-                if(result){
-
-                }else{
-
-                }
-            })
-            .catch();
-        }
-    })
-});
 
 
 
