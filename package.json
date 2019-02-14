@@ -1,0 +1,45 @@
+{
+  "name": "server",
+  "version": "1.0.0",
+  "description": "An Ecommerce Shopping Cart Backend",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node server.js"
+  },
+   "engines": {
+    "node": "11.1.0"
+  },
+  "keywords": [
+    "shopping",
+    "cart",
+    "node",
+    "js"
+  ],
+  "author": "EHURIAH CHUKWUDIKE GODSPOWER",
+  "license": "ISC",
+  "dependencies": {
+    "bcryptjs": "^2.4.3",
+    "body-parser": "^1.18.3",
+    "cloudinary": "^1.13.2",
+    "connect-flash": "^0.1.1",
+    "express": "^4.16.4",
+    "express-session": "^1.15.6",
+    "express-validator": "^5.3.1",
+    "joi": "^14.3.1",
+    "jsonwebtoken": "^8.4.0",
+    "lodash": "^4.17.11",
+    "mongoose": "^5.4.4",
+    "mongoose-paginate": "^5.0.3",
+    "mongoose-unique-validator": "^2.0.2",
+    "mongoose-validation-error-transform": "0.0.2",
+    "morgan": "^1.9.1",
+    "multer": "^1.4.1",
+    "multer-storage-cloudinary": "^2.2.1",
+    "nodemailer": "^5.1.1",
+    "passport": "^0.4.0",
+    "passport-local": "^1.0.0",
+    "paystack": "^2.0.1",
+    "vuex": "^3.1.0"
+  }
+}
