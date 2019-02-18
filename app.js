@@ -14,7 +14,7 @@ const productRoute = require('./api/routes/product');
 const contactRoute = require('./api/routes/contact');
 const orderRoute = require('./api/routes/order');
 
-mongoose.connect(process.env.MONGODB_URI, {useNewUrlParser: true});
+mongoose.connect(process.env.MONGODB_URI ||  'mongodb://localhost:27017/meeks', {useNewUrlParser: true});
 
 app.use(morgan('dev'));
 app.use(bodyParser.json({limit: '50mb'}));

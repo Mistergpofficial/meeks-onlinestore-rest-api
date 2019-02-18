@@ -224,4 +224,26 @@ Product
    });
 });
 
+
+//get all product each from category
+router.get('/productByCat/all', (req, res, next) => {  
+    Product
+    .find()
+    .exec()
+       .then(product => {
+            if(product.length > 0){
+                res.status(200).json(product)
+             }else{
+                res.status(404).json({
+                    message: 'error'
+                })
+            }
+       })
+       .catch(err => {
+        res.status(500).json({
+            message: err
+        });
+       });
+    });
+
 module.exports = router
