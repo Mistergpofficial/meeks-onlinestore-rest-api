@@ -12,7 +12,15 @@ const orderSchema = new schema({
         type: Object, 
         required: true
     },
-    reference: {type: String}
+    reference: {type: String},
+    createdAt: {
+        type: Date,
+        default: Date.now
+    },
+    updatedAt: {
+        type: Date,
+        default: Date.now
+    },
 });
 
 module.exports = Mongoose.model('Order', orderSchema);

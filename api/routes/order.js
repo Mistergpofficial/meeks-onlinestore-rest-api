@@ -56,7 +56,7 @@ router.post('/paywithout', (req,res, next) => {
     });
 });
 
-
+// get all orders
 router.get('/all-orders', (req, res, next) => {
     Order.find()
     .exec()
@@ -69,6 +69,7 @@ router.get('/all-orders', (req, res, next) => {
                         cart: doc.cart,
                         user: doc.user,
                         reference: doc.reference,
+                        createdAt: doc.createdAt,
                         id: doc._id
                     }
                 })
@@ -84,6 +85,45 @@ router.get('/all-orders', (req, res, next) => {
         res.status(500).json({
             error: err
         });
+    });
+});
+
+//get order by ID
+router.get('/:orderId', (req, res, next) => {
+    const id = req.params.orderId;
+    Order.findById(id)
+    .exec()
+    .then(doc => {
+        if(doc){
+            res.status(200).json(doc)
+        }else{
+            res.status(200).json({
+                message: 'No order details found for the given ID'
+            }) 
+        }
+    })
+    .catch(err => {
+        res.status(500).json({
+            error: err
+        });
+    });
+});
+
+router.delete('/:orderId', function (req, res,next) {
+    const id = req.params.orderId;
+    Order.remove({_id: id}).exec().then(function (result) {
+        res.status(200).json({
+            message: 'Order Deleted Successfully',
+            requests: {
+                type: 'POST',
+                url: 'http://localhost:3000/orders'
+            }
+        });
+    }).catch(function (err) {
+        console.log(err);
+        res.status(500).json({
+            error: err
+        })
     });
 });
 
