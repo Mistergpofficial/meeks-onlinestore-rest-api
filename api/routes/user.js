@@ -54,7 +54,10 @@ router.post('/admin-signup', function (req,res,next) {
                                         var transporter = nodemailer.createTransport({ 
                                             host: "smtp.mailtrap.io",
                                             port: 2525,
-                                            auth: process.env.MAILTRAP_API_TOKEN
+                                            auth: { 
+                                                user: '3348b04943bfb0', 
+                                                pass: '01c1ffe9a3b4bb' 
+                                                       } 
                                             });
                                             const mailOptions = { 
                                           from: 'no-reply@yourwebapplication.com', 
@@ -266,7 +269,10 @@ router.post('/user-signup', function (req,res,next) {
                                         var transporter = nodemailer.createTransport({ 
                                             host: "smtp.mailtrap.io",
                                             port: 2525,
-                                            auth: process.env.MAILTRAP_API_TOKEN
+                                            auth: { 
+                                                user: '3348b04943bfb0', 
+                                                pass: '01c1ffe9a3b4bb' 
+                                                       }
                                             });
                                             const mailOptions = { 
                                           from: 'no-reply@yourwebapplication.com', 
@@ -319,7 +325,10 @@ router.post('/resend', (req, res, next) => {
                 var transporter = nodemailer.createTransport({ 
                     host: "smtp.mailtrap.io",
                     port: 2525,
-                    auth: process.env.MAILTRAP_API_TOKEN
+                    auth: { 
+                            user: '3348b04943bfb0', 
+                            pass: '01c1ffe9a3b4bb' 
+                          }
                     });
                     const mailOptions = { 
                   from: 'no-reply@yourwebapplication.com', 
