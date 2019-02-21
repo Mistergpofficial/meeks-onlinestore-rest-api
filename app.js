@@ -22,41 +22,27 @@ app.use(bodyParser.json({limit: '50mb'}));
 app.use(bodyParser.urlencoded({limit: '50mb', extended: true}));
 
 // app.use((req, res, next) => { 
-//     res.header('Access-Control-Allow-Origin', '*'); 
-//     res.header('Access-Control-Allow-Headers', 'Origin, Content-Type,Content-Length, Authorization, Accept,X-Requested-With,XMLHttpRequest');
+//     res.header('Access-Control-Allow-Origin', 'https://meeks-onlinestore-client.herokuapp.com'); 
+//     res.header('Access-Control-Allow-Headers', 'XMLHttpRequest, Origin, Content-Type,Content-Length, Authorization, Accept,X-Requested-With');
 //     if(req.method === 'OPTIONS'){
-//         res.header('Access-Control-Allow-Methods', 'PUT, POST, PATCH, DELETE, GET');
+//         res.header('Access-Control-Allow-Methods', 'DELETE, PUT, POST, PATCH, GET');
 //         return res.status(200).json({});
 //     }
 // });
 
 
-// app.all("*", function (req, res, next) {
-//     res.header('Access-Control-Allow-Origin', '*');
-//     res.header("Access-Control-Allow-Headers", "Origin, Content-Type,Content-Length, Authorization, Accept,X-Requested-With,XMLHttpRequest");
-//     res.header("Access-Control-Allow-Methods","PUT,POST,GET,DELETE,OPTIONS, PATCH");
-//     if (req.method === 'OPTIONS') {
-//         res.send(200);
-//     } else {
-//         next();
-//     }
-// });
-
-var allowCrossDomain = function(req, res, next) {
+app.all("*", function (req, res, next) {
     res.header('Access-Control-Allow-Origin', 'https://meeks-onlinestore-client.herokuapp.com');
-    res.header('Access-Control-Allow-Methods', 'GET,PUT,POST,DELETE,OPTIONS');
-    res.header('Access-Control-Allow-Headers', 'Content-Type, Authorization, Content-Length, X-Requested-With');
-
-    // intercept OPTIONS method
-    if ('OPTIONS' == req.method) {
-      res.send(200);
+    res.header("Access-Control-Allow-Headers", "XMLHttpRequest, Origin, Content-Type,Content-Length, Authorization, Accept,X-Requested-With");
+    res.header("Access-Control-Allow-Methods","DELETE, PUT,POST,GET,OPTIONS, PATCH");
+    if (req.method === 'OPTIONS') {
+        res.send(200);
+    } else {
+        next();
     }
-    else {
-      next();
-    }
-};
+});
 
-app.use(allowCrossDomain);
+
 
 //app.options('*', cors());
 //app.use(cors());
