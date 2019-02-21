@@ -32,10 +32,12 @@ app.use(bodyParser.urlencoded({limit: '50mb', extended: true}));
 // });
 
 
+
+
 app.all("*", function (req, res, next) {
-    res.header('Access-Control-Allow-Origin', 'https://meeks-onlinestore-client.herokuapp.com');
-    res.header("Access-Control-Allow-Headers", "XMLHttpRequest, Origin, Content-Type,Content-Length, Authorization, Accept,X-Requested-With");
-    res.header("Access-Control-Allow-Methods","DELETE, PUT,POST,GET,OPTIONS, PATCH");
+    res.header('Access-Control-Allow-Origin', '*');
+    res.header("Access-Control-Allow-Headers", "Origin,Content-Type,Content-Length, Authorization, Accept,X-Requested-With,XMLHttpRequest");
+    res.header("Access-Control-Allow-Methods","PUT,POST,GET,DELETE,OPTIONS, PATCH");
     if (req.method === 'OPTIONS') {
         res.send(200);
     } else {
