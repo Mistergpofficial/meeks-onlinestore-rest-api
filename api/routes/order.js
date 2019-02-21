@@ -112,8 +112,8 @@ router.get('/:orderId', (req, res, next) => {
 
 
 
-router.delete('/:orderId/delete', function (req, res,next) {
-    const id = req.params.orderId;
+router.post('/:id/delete', function (req, res,next) {
+    const id = req.params.id;
       Order.findById(id)
     .exec()
     .then(doc => {
