@@ -112,7 +112,7 @@ router.get('/:orderId', (req, res, next) => {
 
 
 
-router.post('/:id/delete', function (req, res,next) {
+router.delete('/:id/delete', function (req, res,next) {
     const id = req.params.id;
       Order.findById(id)
     .exec()
