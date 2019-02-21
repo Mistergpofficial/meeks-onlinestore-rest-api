@@ -1,4 +1,5 @@
 const express = require('express');
+var cors = require('cors')
 const app = express();
 const morgan = require('morgan');
 const bodyParser = require('body-parser');
@@ -30,16 +31,18 @@ app.use(bodyParser.urlencoded({limit: '50mb', extended: true}));
 // });
 
 
-app.all("*", function (req, res, next) {
-    res.header('Access-Control-Allow-Origin', '*');
-    res.header("Access-Control-Allow-Headers", "Origin, Content-Type,Content-Length, Authorization, Accept,X-Requested-With,XMLHttpRequest");
-    res.header("Access-Control-Allow-Methods","PUT,POST,GET,DELETE,OPTIONS, PATCH");
-    if (req.method === 'OPTIONS') {
-        res.send(200);
-    } else {
-        next();
-    }
-});
+// app.all("*", function (req, res, next) {
+//     res.header('Access-Control-Allow-Origin', '*');
+//     res.header("Access-Control-Allow-Headers", "Origin, Content-Type,Content-Length, Authorization, Accept,X-Requested-With,XMLHttpRequest");
+//     res.header("Access-Control-Allow-Methods","PUT,POST,GET,DELETE,OPTIONS, PATCH");
+//     if (req.method === 'OPTIONS') {
+//         res.send(200);
+//     } else {
+//         next();
+//     }
+// });
+
+app.use(cors())
 
 // Routes which should handle requests
 app.use('/user', userRoutes);
