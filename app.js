@@ -42,7 +42,8 @@ app.use(bodyParser.urlencoded({limit: '50mb', extended: true}));
 //     }
 // });
 
-app.use(cors())
+app.options('*', cors());
+app.use(cors());
 
 // Routes which should handle requests
 app.use('/user', userRoutes);

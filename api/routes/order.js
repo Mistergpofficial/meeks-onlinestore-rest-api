@@ -1,5 +1,4 @@
 const express = require('express');
-var cors = require('cors')
 const router = express.Router();
 const Mongoose = require('mongoose');
 const Order = require('../models/order');
@@ -113,8 +112,7 @@ router.get('/:orderId', (req, res, next) => {
 
 
 
-router.options('/:orderId', cors())
-router.delete('/:orderId', cors(), function (req, res,next) {
+router.post('/:orderId', function (req, res,next) {
     const id = req.params.orderId;
       Order.findById(id)
     .exec()
