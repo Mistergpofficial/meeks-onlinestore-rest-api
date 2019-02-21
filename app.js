@@ -1,5 +1,5 @@
 const express = require('express');
-const methodOverride = require('method-override');
+//const methodOverride = require('method-override');
 //var cors = require('cors')
 const app = express();
 const morgan = require('morgan');
@@ -48,7 +48,7 @@ app.all("*", function (req, res, next) {
 //app.options('*', cors());
 //app.use(cors());
 
-app.use(methodOverride('_method'));
+//app.use(methodOverride('_method'));
 //app.use(methodOverride('X-HTTP-Method-Override'))
 
 // Routes which should handle requests
