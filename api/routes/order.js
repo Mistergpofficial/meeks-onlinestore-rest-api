@@ -95,7 +95,11 @@ router.get('/:orderId', (req, res, next) => {
     .exec()
     .then(doc => {
         if(doc){
-            res.status(200).json(doc)
+             res.status(200).json({
+                _id: doc._id,
+                user: doc.user,
+                cart: doc.cart
+            })
         }else{
             res.status(200).json({
                 message: 'No order details found for the given ID'
