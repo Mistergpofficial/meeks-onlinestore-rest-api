@@ -2,10 +2,13 @@ const express = require('express');
 const router = express.Router();
 const Mongoose = require('mongoose');
 const Order = require('../models/order');
+const nodemailer = require('nodemailer');
+const crypto = require('crypto');
 
 router.post('/paywith', (req,res, next) => {
     const order = new Order({
         _id: Mongoose.Types.ObjectId(),
+        uniqueId: crypto.randomBytes(24).toString('hex'),
         cart : req.body.cart,
         user: req.body.user,
         reference: req.body.reference
@@ -13,9 +16,32 @@ router.post('/paywith', (req,res, next) => {
     order.save()
     .then(result => {
         if(result) {
-            res.status(200).json({
-                message: 'Order has been Placed'
-            });
+             const email1 = req.body.email1
+            var transporter = nodemailer.createTransport({ 
+                host: "smtp.mailtrap.io",
+                port: 2525,
+                auth: { 
+                    user: 'df3c8258cde1c4', 
+                    pass: '5f7cfd72ade7df' 
+                           } 
+                });
+                const mailOptions = { 
+                    from: 'no-reply@yourwebapplication.com', 
+                     to: email1, 
+                     subject: 'Order Has Been Placed', 
+                    text: 'Hello,\n\n' + order.user.full_name + 'Your Order:' + ' ' + 'has been successfully placed' };
+                    transporter.sendMail(mailOptions, function (err) { 
+                        if(err){
+                            return res.status(500).json({ 
+                                msg: err.message 
+                            });
+                        }else{
+                            res.status(200).json('A  mail has been sent to ' + order.user.email1 + '.');
+                        }
+                    }); // transporter.sendMail ends
+            // res.status(200).json({
+            //     message: 'Order has been Placed'
+            // });
         }else{
             res.status(404).json({
                 message: 'Order Not Found'
@@ -32,6 +58,7 @@ router.post('/paywith', (req,res, next) => {
 router.post('/paywithout', (req,res, next) => {
     const order = new Order({
         _id: Mongoose.Types.ObjectId(),
+        uniqueId: crypto.randomBytes(24).toString('hex'),
         cart : req.body.cart,
         user: req.body.user,
         reference: 'PAYMENT ON DELIVERY'
@@ -39,9 +66,32 @@ router.post('/paywithout', (req,res, next) => {
     order.save()
     .then(result => {
         if(result) {
-            res.status(200).json({
-                message: 'Order has been Placed'
-            });
+             const email = req.body.email
+            var transporter = nodemailer.createTransport({ 
+                host: "smtp.mailtrap.io",
+                port: 2525,
+                auth: { 
+                    user: 'df3c8258cde1c4', 
+                    pass: '5f7cfd72ade7df' 
+                           } 
+                });
+                const mailOptions = { 
+                    from: 'no-reply@yourwebapplication.com', 
+                     to: email, 
+                     subject: 'Order Has Been Cancelled', 
+                    text: 'Hello,\n\n' + order.user.full_name + 'Your Order:' + ' ' + 'has been successfully placed' };
+                    transporter.sendMail(mailOptions, function (err) { 
+                        if(err){
+                            return res.status(500).json({ 
+                                msg: err.message 
+                            });
+                        }else{
+                            res.status(200).json('A  mail has been sent to ' + order.user.email + '.');
+                        }
+                    }); // transporter.sendMail ends
+            // res.status(200).json({
+            //     message: 'Order has been Placed'
+            // });
           //  console.log(typeof req.body.user)
         }else{
             res.status(404).json({
@@ -66,11 +116,13 @@ router.get('/all-orders', (req, res, next) => {
                 count: docs.length,
                 orderArray: docs.map(doc => {
                     return {
-                        cart: doc.cart,
+                        id: doc._id,
+                        uniqueId: doc.uniqueId,
                         user: doc.user,
+                        cart: doc.cart,
                         reference: doc.reference,
-                        createdAt: doc.createdAt,
-                        id: doc._id
+                        status: doc.status,
+                        createdAt: doc.createdAt
                     }
                 })
             }
@@ -162,6 +214,44 @@ router.delete('/delete/:orderId',  function (req, res,next) {
         });
     });
  
+});
+
+//cancel an order
+router.patch('/cancel-order' , (req,res,next)=> {
+    const uniqueId = req.body.uniqueId;
+    if (!req.body.uniqueId) {
+        res.status(422).json({success: false, msg: 'All Fields are required'});
+    } else{
+        Order.findById(uniqueId)
+        .exec()
+        .then(doc => {
+            if(doc){
+    Order.update({uniqueId:uniqueId}, {$set: {uniqueId: req.body.uniqueId, status: 'CANCELLED'}})
+    .exec()
+    .then(result => {
+        if(result){
+            res.status(200).json({
+                msg: 'Order Cancellation Sent'
+            })
+        }else{
+            res.status(404).json({
+                msg: 'Order Cancellation Failed'
+            })
+        }
+    })
+    .catch(err => {
+        res.status(500).json({
+            error: err
+        })
+    });
+        }else{
+         res.status(422).json({
+             msg: 'Cold not find order with given ID'
+            })
+         }
+    })
+        // .catch();
+}
 });
 
 

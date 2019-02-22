@@ -3,7 +3,9 @@ const schema = Mongoose.Schema;
 
 const orderSchema = new schema({
     id: Mongoose.Schema.Types.ObjectId,
-
+    uniqueId: {
+        type: String
+    },
     user: {
         type: Object,
          ref: 'User'
