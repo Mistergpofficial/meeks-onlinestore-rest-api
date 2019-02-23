@@ -23,6 +23,10 @@ const orderSchema = new schema({
         type: Date,
         default: Date.now
     },
+    status: {
+        type: String,
+        default: 'NOT ORDERED'
+    }
 });
 
 module.exports = Mongoose.model('Order', orderSchema);

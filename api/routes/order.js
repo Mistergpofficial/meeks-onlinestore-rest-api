@@ -8,7 +8,7 @@ const crypto = require('crypto');
 router.post('/paywith', (req,res, next) => {
     const order = new Order({
         _id: Mongoose.Types.ObjectId(),
-        uniqueId: crypto.randomBytes(24).toString('hex'),
+        uniqueId: crypto.randomBytes(12).toString('hex'),
         cart : req.body.cart,
         user: req.body.user,
         reference: req.body.reference
@@ -58,7 +58,7 @@ router.post('/paywith', (req,res, next) => {
 router.post('/paywithout', (req,res, next) => {
     const order = new Order({
         _id: Mongoose.Types.ObjectId(),
-        uniqueId: crypto.randomBytes(24).toString('hex'),
+        uniqueId: crypto.randomBytes(12).toString('hex'),
         cart : req.body.cart,
         user: req.body.user,
         reference: 'PAYMENT ON DELIVERY'
