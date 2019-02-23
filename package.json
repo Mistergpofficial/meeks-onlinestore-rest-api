@@ -41,6 +41,7 @@
     "multer-storage-cloudinary": "^2.2.1",
     "node-cron": "^2.0.3",
     "nodemailer": "^5.1.1",
+    "opencollective-postinstall": "^2.0.2",
     "passport": "^0.4.0",
     "passport-local": "^1.0.0",
     "paystack": "^2.0.1",
