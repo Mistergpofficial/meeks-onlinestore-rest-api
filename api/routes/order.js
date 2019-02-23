@@ -219,22 +219,20 @@ router.delete('/delete/:orderId',  function (req, res,next) {
 });
 
 //cancel an order
-router.get('/odd/cancel-order', (req, res, next) => {
+router.patch('/odd/cancel-order', (req, res, next) => {
     if (!req.body.uniqueId) {
         res.status(422).json({success: false, msg: 'All Fields are required'});
     } else{
-    const id = req.body.uniqueId;
-    Order.findById(id)
+    const uniqueId = req.body.uniqueId;
+    Order.findOne({uniqueId:uniqueId})
     .exec()
     .then(doc => {
         if(doc){
-            Order.update({uniqueId:id}, {$set: {uniqueId: req.body.uniqueId, status: 'CANCELLED'}})
+            Order.update({uniqueId:uniqueId}, {$set: {uniqueId: req.body.uniqueId, status: 'CANCELLED'}})
             .exec()
     .then(result => {
         if(result){
-            res.status(200).json({
-                msg: 'Order Cancellation Sent'
-            })
+            res.status(200).json(uniqueId)
         }else{
             res.status(404).json({
                 msg: 'Order Cancellation Failed'
@@ -244,7 +242,7 @@ router.get('/odd/cancel-order', (req, res, next) => {
           //  res.status(200).json(doc.uniqueId)
         }else{
             res.status(404).json({
-                message: 'No order details found for the given ID'
+                msg: 'No order details found for the given ID'
             }) 
         }
     })
