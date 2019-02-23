@@ -11,7 +11,8 @@ router.post('/paywith', (req,res, next) => {
         uniqueId: crypto.randomBytes(12).toString('hex'),
         cart : req.body.cart,
         user: req.body.user,
-        reference: req.body.reference
+        reference: req.body.reference,
+        status: req.body.status
     });
     order.save()
     .then(result => {
@@ -61,7 +62,8 @@ router.post('/paywithout', (req,res, next) => {
         uniqueId: crypto.randomBytes(12).toString('hex'),
         cart : req.body.cart,
         user: req.body.user,
-        reference: 'PAYMENT ON DELIVERY'
+        reference: 'PAYMENT ON DELIVERY',
+        status: req.body.status
     });
     order.save()
     .then(result => {
