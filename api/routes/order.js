@@ -219,17 +219,17 @@ router.delete('/delete/:orderId',  function (req, res,next) {
 });
 
 //cancel an order
-router.patch('/cancel-order' , (req,res,next)=> {
-    const uniqueId = req.body.uniqueId;
+router.get('/odd/cancel-order', (req, res, next) => {
     if (!req.body.uniqueId) {
         res.status(422).json({success: false, msg: 'All Fields are required'});
     } else{
-        Order.findById(uniqueId)
-        .exec()
-        .then(doc => {
-            if(doc){
-    Order.update({uniqueId:uniqueId}, {$set: {uniqueId: req.body.uniqueId, status: 'CANCELLED'}})
+    const id = req.body.uniqueId;
+    Order.findById(id)
     .exec()
+    .then(doc => {
+        if(doc){
+            Order.update({uniqueId:id}, {$set: {uniqueId: req.body.uniqueId, status: 'CANCELLED'}})
+            .exec()
     .then(result => {
         if(result){
             res.status(200).json({
@@ -241,21 +241,20 @@ router.patch('/cancel-order' , (req,res,next)=> {
             })
         }
     })
+          //  res.status(200).json(doc.uniqueId)
+        }else{
+            res.status(404).json({
+                message: 'No order details found for the given ID'
+            }) 
+        }
+    })
     .catch(err => {
         res.status(500).json({
             error: err
-        })
+        });
     });
-        }else{
-         res.status(422).json({
-             msg: 'Cold not find order with given ID'
-            })
-         }
-    })
-        // .catch();
 }
 });
-
 
 
 
