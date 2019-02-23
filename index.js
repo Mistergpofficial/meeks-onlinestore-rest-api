@@ -12,8 +12,8 @@ app = express();
     host: "smtp.mailtrap.io",
     port: 2525,
     auth: { 
-        user: 'df3c8258cde1c4', 
-        pass: '5f7cfd72ade7df' 
+        user: '3348b04943bfb0', 
+        pass: '01c1ffe9a3b4bb' 
                } 
     });
 
